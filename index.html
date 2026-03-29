@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  color: white;
+  background: #0f172a;
+}
+
+/* PAGE */
+#page2 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  background: linear-gradient(270deg, #a855f7, #f472b6, #facc15, #10b981);
+  background-size: 800% 800%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+/* TEXT */
+.glow {
+  font-size: 48px;
+  background: linear-gradient(90deg,#a855f7,#c084fc);
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: textGlow 2s infinite alternate;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.glow .emoji { color: white; }
+
+/* IMAGE */
+img.main-img {
+  width: 250px;
+  border-radius: 15px;
+  margin-top: 20px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.2);
+  animation: fadeInUp 1.5s ease forwards;
+}
+
+/* MESSAGE */
+.message {
+  margin-top: 20px;
+  font-size: 22px;
+  max-width: 80%;
+  line-height: 1.5;
+  color: yellow;
+  text-shadow: 0 0 8px #fff200, 0 0 20px #fff200;
+  background-color: rgba(0,0,0,0.5);
+  padding: 12px 20px;
+  border-radius: 12px;
+}
+
+/* FLOATING LOVE IMAGE */
+.float-img {
+  position: absolute;
+  width: 180px;
+  border-radius: 15px;
+  animation: floatUp 4s ease forwards;
+}
+
+/* HEART */
+.heart {
+  position: absolute;
+  color: pink;
+  animation: floatUp 6s linear infinite;
+}
+
+/* FIREWORK */
+.firework {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes textGlow {
+  0% { text-shadow: 0 0 10px #a855f7; }
+  100% { text-shadow: 0 0 30px #c084fc; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0vh); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-60vh); opacity: 0; }
+}
+
+@keyframes explode {
+  to { transform: translate(var(--x), var(--y)); opacity: 0; }
+}
+
+@keyframes gradientAnimation {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<audio id="bgm" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE -->
+<div id="page2">
+  <h1 class="glow" onclick="spawnLove()">rI mU <span class="emoji">🎀</span></h1>
+
+  <img src="liuni.jpg" alt="Beautiful face" class="main-img">
+
+  <div class="message">
+    মাশাআল্লাহ আলহামদুলিল্লাহ,<br>
+    সুন্দর মুখের দর্শন দেখতে পেলাম
+  </div>
+</div>
+
+<script>
+// Auto play music
+window.addEventListener("load", function() {
+  const audio = document.getElementById("bgm");
+  audio.play().catch(() => {
+    document.body.addEventListener("click", () => audio.play());
+  });
+});
+
+// Floating hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+// Click → spawn floating love image + fireworks
+function spawnLove() {
+  const loveImg = document.createElement("img");
+  loveImg.src = "love.jpg"; // <-- এখানে তোমার ছবি add করবে
+  loveImg.className = "float-img";
+  loveImg.style.left = (50 + Math.random()*20 - 10) + "vw";
+  document.body.appendChild(loveImg);
+  setTimeout(() => loveImg.remove(), 4000);
+
+  // Fireworks
+  for (let i = 0; i < 20; i++) {
+    const f = document.createElement("div");
+    f.className = "firework";
+    f.style.left = "50%";
+    f.style.top = "50%";
+    f.style.setProperty('--x', (Math.random()*200-100)+'px');
+    f.style.setProperty('--y', (Math.random()*200-100)+'px');
+    document.body.appendChild(f);
+    setTimeout(() => f.remove(), 1000);
+  }
+}
+</script>
+</body>
+</html>
